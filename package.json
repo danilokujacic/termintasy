@@ -8,7 +8,7 @@
     "build:frontend": "nx run termintasy:build --prod",
     "build:backend": "nx run termintasy-backend:build && prisma migrate deploy && npm run seed",
     "seed": "node --loader ts-node/esm apps/termintasy-backend/prisma/seed.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate --schema=apps/termintasy-backend/prisma/schema.prisma"
   },
   "private": true,
   "dependencies": {
