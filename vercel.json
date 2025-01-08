@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "dist/main.js"
+      "dest": "dist/apps/termintasy-backend/main.js"
     }
   ]
 }
