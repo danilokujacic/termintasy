@@ -1,0 +1,22 @@
+<div *ngIf="game()" class="flex gap-2 px-2 py-4">
+  <div class="flex flex-col gap-1 justify-start">
+    <p>Team 1 - {{ game()?.homeTeamScore }}</p>
+    <button
+      class="underline flex justify-start text-blue-500"
+      (click)="goToPlayer(player.id)"
+      *ngFor="let player of game()?.homeTeamPlayers"
+    >
+      {{ player.name }}
+    </button>
+  </div>
+  <div class="flex flex-col gap-1 justify-start">
+    <p>Team 2 - {{ game()?.awayTeamScore }}</p>
+    <button
+      class="underline flex justify-start text-blue-500"
+      (click)="goToPlayer(player.id)"
+      *ngFor="let player of game()?.awayTeamPlayers"
+    >
+      {{ player.name }}
+    </button>
+  </div>
+</div>

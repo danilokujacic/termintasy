@@ -1,0 +1,18 @@
+<div class="w-full h-full gap-4 flex flex-col px-2 py-4 overflow-auto">
+  <button class="underline text-blue-500" (click)="backToTable()">
+    Back to Table
+  </button>
+  <button
+    (click)="goToGame(game.id)"
+    class="flex flex-col"
+    *ngFor="let game of games(); let i = index"
+  >
+    <h3>Game</h3>
+    <p><span class="font-bold">Team 1</span>: {{ game.homeScore }}</p>
+    <p><span class="font-bold">Team 2</span>: {{ game.awayScore }}</p>
+    <p>
+      <span class="font-bold">Match Date</span>:
+      {{ game.matchDate | date : 'EEEE, dd-MM' }}
+    </p>
+  </button>
+</div>

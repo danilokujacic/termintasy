@@ -1,0 +1,71 @@
+<app-layout>
+  <app-players-wrapper
+    (closeChanges)="onSelect($event)"
+    [playerPosition]="playersDrawer()"
+    [selectedPlayers]="playersValues"
+    *ngIf="playersDrawer()"
+  ></app-players-wrapper>
+  <div class="w-full h-full relative flex flex-col">
+    <div class="h-[40px] px-2 flex items-center justify-between">
+      <input
+        class="ring-indigo-600 ring-1 px-4 py-2 mt-1"
+        placeholder="Team Name"
+        [formControl]="teamName"
+      />
+      <button
+        (click)="confirm()"
+        [disabled]="!canConfirm"
+        class="bg-indigo-700 disabled:bg-gray-500 text-white py-2 mt-1 px-4"
+      >
+        Confirm
+      </button>
+    </div>
+    <div class="flex-1 relative soccer-field">
+      <div class="absolute bottom-[28%] w-full">
+        <button
+          role="button"
+          (click)="queryPlayers('GK', 'gk')"
+          class="player-box left-1/2 -translate-x-1/2 absolute"
+        >
+          {{ players().gk ? players().gk.name : 'GK' }}
+        </button>
+      </div>
+      <div class="absolute bottom-[48%] w-full">
+        <button
+          (click)="queryPlayers('DEF', 'def1')"
+          class="player-box left-[8%] absolute"
+        >
+          {{ players().def1 ? players().def1.name : 'DEF' }}
+        </button>
+        <button
+          (click)="queryPlayers('DEF', 'def2')"
+          class="player-box right-[8%] absolute"
+        >
+          {{ players().def2 ? players().def2.name : 'DEF' }}
+        </button>
+      </div>
+      <div class="absolute bottom-[70%] w-full">
+        <button
+          (click)="queryPlayers('MID', 'mid')"
+          class="player-box left-1/2 -translate-x-1/2 absolute"
+        >
+          {{ players().mid ? players().mid.name : 'MID' }}
+        </button>
+      </div>
+      <div class="absolute top-[5%] w-full">
+        <button
+          (click)="queryPlayers('ATK', 'atk1')"
+          class="player-box left-[8%] absolute"
+        >
+          {{ players().atk1 ? players().atk1.name : 'ATK' }}
+        </button>
+        <button
+          (click)="queryPlayers('ATK', 'atk2')"
+          class="player-box right-[8%] absolute"
+        >
+          {{ players().atk2 ? players().atk2.name : 'ATK' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</app-layout>
