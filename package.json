@@ -65,7 +65,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/bull": "^3.15.9",
     "@types/jest": "^29.5.12",
-    "@types/node": "^18.16.9",
+    "@types/node": "^18.19.70",
     "@typescript-eslint/utils": "^8.13.0",
     "angular-eslint": "^19.0.2",
     "autoprefixer": "^10.4.20",
