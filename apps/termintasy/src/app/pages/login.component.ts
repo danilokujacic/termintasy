@@ -18,7 +18,7 @@ export class LoginComponent {
     window.location.assign(
       'https://accounts.google.com/o/oauth2/v2/auth?client_id=' +
         environment.clientId +
-        '&redirect_uri=http://localhost:4200/oauth/gmail/redirect&response_type=token&scope=openid profile email'
+        '&redirect_uri=https://termintasy.vercel.app/oauth/gmail/redirect&response_type=token&scope=openid profile email'
     );
   }
 }
