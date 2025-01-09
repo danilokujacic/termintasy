@@ -8,7 +8,7 @@ RUN npm install
 
 COPY . .
 
-RUN npx nx build-many --projects=termintasy,termintasy-backend --parallel
+RUN npx nx build-many --projects=* --parallel
 
 FROM node:18 as runtime
 WORKDIR /app
