@@ -1,5 +1,5 @@
 # Stage 1: Build the Angular application
-FROM node:18 as build-projects
+FROM node:18-alpine as build-projects
 WORKDIR /app
 
 # Copy package.json and package-lock.json first (for caching)
