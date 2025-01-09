@@ -2,35 +2,52 @@
 FROM node:18 as build-angular
 WORKDIR /app
 
+# Copy package.json and package-lock.json first (for caching)
 COPY package*.json ./
+RUN npm ci
 
-RUN npm install
+# Copy the rest of the application files
+COPY . ./
 
-COPY . .
+# Build the Angular application
+RUN npx nx build termintasy --configuration=production
 
-RUN npx nx run-many -t-build --projects=* --parallel
+# Stage 2: Build the NestJS application
+FROM node:18 as build-nestjs
+WORKDIR /app
 
+# Copy package.json and package-lock.json first (for caching)
+COPY package*.json ./
+RUN npm ci
+
+# Copy the rest of the application files
+COPY . ./
+
+# Build the NestJS application
+RUN npx nx build termintasy-backend
+
+# Stage 3: Serve the applications
 FROM node:18 as runtime
 WORKDIR /app
 
-# Copy Angular build files to serve via a static file server
-COPY  /app/dist/apps/termintasy /app/angular
+# Copy the Angular build files to the runtime container
+COPY --from=build-angular /app/dist/apps/termintasy /app/angular
 
-# Copy NestJS build files
-COPY  /app/dist/apps/termintasy-backend /app/nestjs
+# Copy the NestJS build files to the runtime container
+COPY --from=build-nestjs /app/dist/apps/termintasy-backend /app/nestjs
 
-# Install necessary packages
+# Install the HTTP server to serve Angular
 RUN npm install -g http-server
 
-# Copy entrypoint script to handle migrations and seeding
+# Copy entrypoint script for migrations and seeding
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Expose the two ports for serving Angular and NestJS
+# Expose the necessary ports
 EXPOSE 4200 3000
 
-# Set the entrypoint to run the script before starting the applications
+# Set the entrypoint to handle migrations and start both applications
 ENTRYPOINT ["/entrypoint.sh"]
 
-# Run both Angular and NestJS applications (after seeding and migration)
+# Run Angular and NestJS applications after migration and seeding
 CMD ["sh", "-c", "http-server /app/angular -p 4200 & node /app/nestjs/main.js"]
