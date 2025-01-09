@@ -2,7 +2,7 @@
 FROM node:18 as build-angular
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 COPY . .
 RUN npx nx build termintasy --configuration=production
 
@@ -10,7 +10,7 @@ RUN npx nx build termintasy --configuration=production
 FROM node:18 as build-nestjs
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 COPY . .
 RUN npx nx build termintasy-backend
 
