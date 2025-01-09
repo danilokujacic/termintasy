@@ -12,16 +12,6 @@ COPY . ./
 # Build the Angular application
 RUN npx nx run-many -t=build --prod
 
-# Stage 3: Serve the applications
-FROM node:18 as runtime
-WORKDIR /app
-
-# Copy the Angular build files to the runtime container
-COPY --from=build-projects /app/dist/apps/termintasy /app/angular
-
-# Copy the NestJS build files to the runtime container
-COPY --from=build-projects /app/dist/apps/termintasy-backend /app/nestjs
-
 # Install the HTTP server to serve Angular
 RUN npm install -g http-server
 
@@ -36,4 +26,4 @@ EXPOSE 4200 3000
 ENTRYPOINT ["/entrypoint.sh"]
 
 # Run Angular and NestJS applications after migration and seeding
-CMD ["sh", "-c", "http-server /app/angular -p 4200 & node /app/nestjs/main.js"]
+CMD ["sh", "-c", "http-server /dist/termintasy/browser -p 4200 & node /dist/termintasy-backend/main.js"]
