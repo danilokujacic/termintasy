@@ -22,11 +22,18 @@ COPY --from=build-angular /app/dist/apps/termintasy /app/angular
 # Copy NestJS build files
 COPY --from=build-nestjs /app/dist/apps/termintasy-backend /app/nestjs
 
-# Install a lightweight HTTP server for Angular
+# Install necessary packages
 RUN npm install -g http-server
+
+# Copy entrypoint script to handle migrations and seeding
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Expose the two ports for serving Angular and NestJS
 EXPOSE 4200 3000
 
-# Run both applications
+# Set the entrypoint to run the script before starting the applications
+ENTRYPOINT ["/entrypoint.sh"]
+
+# Run both Angular and NestJS applications (after seeding and migration)
 CMD ["sh", "-c", "http-server /app/angular -p 4200 & node /app/nestjs/main.js"]

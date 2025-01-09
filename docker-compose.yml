@@ -2,6 +2,8 @@ version: "3.8"
 
 services:
   angular-app:
+    networks:
+        - my_network
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,6 +14,8 @@ services:
       sh -c "http-server /app/dist/apps/angular-app-name -p 4200"
 
   nestjs-app:
+    networks:
+        - my_network
     build:
       context: .
       dockerfile: Dockerfile
@@ -20,4 +24,6 @@ services:
       - "3000:3000"
     command: >
       sh -c "node /app/dist/apps/nestjs-app-name/main.js"
-
+  networks:
+    my_network:
+      driver: bridge
