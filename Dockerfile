@@ -1,5 +1,5 @@
 # Stage 1: Build the Angular application
-FROM node:18 as build-angular
+FROM node:18 as build-projects
 WORKDIR /app
 
 # Copy package.json and package-lock.json first (for caching)
@@ -10,31 +10,17 @@ RUN npm ci
 COPY . ./
 
 # Build the Angular application
-RUN npx nx build termintasy --configuration=production
-
-# Stage 2: Build the NestJS application
-FROM node:18 as build-nestjs
-WORKDIR /app
-
-# Copy package.json and package-lock.json first (for caching)
-COPY package*.json ./
-RUN npm ci
-
-# Copy the rest of the application files
-COPY . ./
-
-# Build the NestJS application
-RUN npx nx build termintasy-backend
+RUN npx nx run-many -t=build --prod
 
 # Stage 3: Serve the applications
 FROM node:18 as runtime
 WORKDIR /app
 
 # Copy the Angular build files to the runtime container
-COPY --from=build-angular /app/dist/apps/termintasy /app/angular
+COPY --from=build-projects /app/dist/apps/termintasy /app/angular
 
 # Copy the NestJS build files to the runtime container
-COPY --from=build-nestjs /app/dist/apps/termintasy-backend /app/nestjs
+COPY --from=build-projects /app/dist/apps/termintasy-backend /app/nestjs
 
 # Install the HTTP server to serve Angular
 RUN npm install -g http-server
