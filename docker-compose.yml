@@ -24,6 +24,6 @@ services:
       - "3000:3000"
     command: >
       sh -c "node /app/dist/apps/nestjs-app-name/main.js"
-  networks:
-    my_network:
-      driver: bridge
+networks:
+  my_network:
+    driver: bridge
