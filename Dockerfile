@@ -1,15 +1,17 @@
 # Stage 1: Build the Angular application
 FROM node:18 as build-angular
 WORKDIR /app
-COPY . .
+COPY package*.json ./
 RUN npm ci
+COPY . .
 RUN npx nx build termintasy --configuration=production
 
 # Stage 2: Build the NestJS application
 FROM node:18 as build-nestjs
 WORKDIR /app
-COPY . .
+COPY package*.json ./
 RUN npm ci
+COPY . .
 RUN npx nx build termintasy-backend
 
 # Stage 3: Serve the applications

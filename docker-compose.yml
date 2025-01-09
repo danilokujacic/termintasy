@@ -3,27 +3,29 @@ version: "3.8"
 services:
   angular-app:
     networks:
-        - my_network
+      - my_network
     build:
       context: .
       dockerfile: Dockerfile
-      target: build-angular
+      target: runtime  # Build from the runtime stage instead of build-angular
     ports:
       - "4201:4200"
     command: >
-      sh -c "http-server /app/dist/apps/angular-app-name -p 4200"
+      sh -c "http-server /app/angular -p 4200"
+    depends_on:
+      - nestjs-app  # Ensure backend is up first
 
   nestjs-app:
     networks:
-        - my_network
+      - my_network
     build:
       context: .
       dockerfile: Dockerfile
-      target: build-nestjs
+      target: runtime  # Build from the runtime stage instead of build-nestjs
     ports:
       - "3000:3000"
     command: >
-      sh -c "node /app/dist/apps/nestjs-app-name/main.js"
+      sh -c "node /app/nestjs/main.js"
 networks:
   my_network:
     driver: bridge
