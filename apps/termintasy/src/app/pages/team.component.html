@@ -1,11 +1,34 @@
 <app-layout>
+  <app-players-wrapper
+    (closeChanges)="onSelect($event)"
+    [playerPosition]="playersDrawer()"
+    [selectedPlayers]="selectedPlayers()"
+    *ngIf="playersDrawer()"
+  ></app-players-wrapper>
   <div class="w-full h-full relative flex flex-col">
-    <div class="h-[40px] px-2 flex items-center justify-between">
-      <p>{{ teamName() }}</p>
+    <div class="flex px-2 justify-between items-center">
+      <div class="flex flex-col h-[60px]">
+        <p>{{ teamName() }}</p>
+        <p *ngIf="typeof transfers() === 'number' && isOwner()">
+          Transfers: {{ teamTransfers() >= 0 ? teamTransfers() : 0 }}
+          <span *ngIf="teamTransfers() < 0"
+            >{{ teamTransfers() * 4 }} points</span
+          >
+        </p>
+      </div>
+      <button
+        *ngIf="playersToTransferTeamPlayersDif().length"
+        (click)="makeTransfer()"
+        class="text-blue-500"
+      >
+        Transfer
+      </button>
     </div>
+
     <div class="flex-1 relative soccer-field">
       <div class="absolute bottom-[28%] w-full">
         <button
+          (click)="queryPlayers('GK', 'gk', players().gk)"
           role="button"
           class="player-box left-1/2 -translate-x-1/2 absolute"
         >
@@ -14,27 +37,42 @@
         </button>
       </div>
       <div class="absolute bottom-[48%] w-full">
-        <button class="player-box left-[8%] absolute">
+        <button
+          (click)="queryPlayers('DEF', 'def1', players().def1)"
+          class="player-box left-[8%] absolute"
+        >
           {{ players().def1 ? players().def1.name : 'DEF' }}
           {{ players().def1 ? playerPoints(players().def1) : 0 }}
         </button>
-        <button class="player-box right-[8%] absolute">
+        <button
+          (click)="queryPlayers('DEF', 'def2', players().def2)"
+          class="player-box right-[8%] absolute"
+        >
           {{ players().def2 ? players().def2.name : 'DEF' }}
           {{ players().def2 ? playerPoints(players().def2) : 0 }}
         </button>
       </div>
       <div class="absolute bottom-[70%] w-full">
-        <button class="player-box left-1/2 -translate-x-1/2 absolute">
+        <button
+          (click)="queryPlayers('MID', 'mid', players().mid)"
+          class="player-box left-1/2 -translate-x-1/2 absolute"
+        >
           {{ players().mid ? players().mid.name : 'MID' }}
           {{ players().mid ? playerPoints(players().mid) : 0 }}
         </button>
       </div>
       <div class="absolute top-[5%] w-full">
-        <button class="player-box left-[8%] absolute">
+        <button
+          (click)="queryPlayers('ATK', 'atk1', players().atk1)"
+          class="player-box left-[8%] absolute"
+        >
           {{ players().atk1 ? players().atk1.name : 'ATK' }}
           {{ players().atk1 ? playerPoints(players().atk1) : 0 }}
         </button>
-        <button class="player-box right-[8%] absolute">
+        <button
+          (click)="queryPlayers('ATK', 'atk2', players().atk2)"
+          class="player-box right-[8%] absolute"
+        >
           {{ players().atk2 ? players().atk2.name : 'ATK' }}
           {{ players().atk2 ? playerPoints(players().atk2) : 0 }}
         </button>
