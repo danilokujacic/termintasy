@@ -115,6 +115,7 @@ export class TeamComponent implements OnInit {
     mapPosition: 'gk' | 'def1' | 'def2' | 'mid' | 'atk1' | 'atk2',
     player: any
   ) {
+    if (!this.isOwner()) return;
     this.playersService.getPlayers(position).subscribe((data) => {
       this.playersService.playerState.set({ loading: false, data });
       this.playersDrawer.set(mapPosition);
