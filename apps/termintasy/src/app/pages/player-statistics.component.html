@@ -1,0 +1,14 @@
+<div class="px-2 flex flex-col gap-2">
+  <div class="flex justify-between">
+    <p class="font-bold">Player</p>
+    <p class="font-bold">Pick rate</p>
+  </div>
+  <button
+    (click)="goToPlayer(player)"
+    *ngFor="let player of players()"
+    class="flex justify-between"
+  >
+    <p>{{ player.name }}</p>
+    <p>{{ player.pickPercentage }}%</p>
+  </button>
+</div>

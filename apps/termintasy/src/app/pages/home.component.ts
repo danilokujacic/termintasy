@@ -22,6 +22,9 @@ export class HomeComponent implements OnInit {
   goToGames() {
     this.router.navigate(['games']);
   }
+  goToPlayers() {
+    this.router.navigate(['players']);
+  }
 
   handleTeam(team: any) {
     this.router.navigate(['team/' + team.id]);

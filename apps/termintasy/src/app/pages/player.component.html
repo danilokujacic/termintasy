@@ -1,0 +1,16 @@
+<div class="flex flex-col px-4 py-4" *ngIf="player()">
+  <img src="player.jpg" alt="player" class="w-[150px] h-[150px] self-center" />
+  <p>{{ player().name }}</p>
+  <p>Position: {{ player().position }}</p>
+  <div class="w-full overflow-x-auto flex gap-2">
+    <ng-container *ngIf="player().gameStats && player().gameStats.length">
+      <div
+        class="w-[250px] flex-shrink-0"
+        *ngFor="let gameStat of player().gameStats"
+      >
+        <p>On {{ gameStat.createdAt | date : 'dd-MM-yyyy' }}</p>
+        <p>Points: {{ gameStat.points }}</p>
+      </div></ng-container
+    >
+  </div>
+</div>

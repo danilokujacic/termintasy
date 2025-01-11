@@ -8,6 +8,8 @@ import { CreateTeamComponent } from './pages/create-team.component';
 import { TeamComponent } from './pages/team.component';
 import { GamesComponent } from './pages/games.component';
 import { GameComponent } from './pages/game.component';
+import { PlayerStatisticsComponent } from './pages/player-statistics.component';
+import { PlayerComponent } from './pages/player.component';
 
 export const appRoutes: Route[] = [
   {
@@ -31,6 +33,16 @@ export const appRoutes: Route[] = [
   {
     path: 'games',
     component: GamesComponent,
+    canActivate: [AuthGuard, TeamGuard],
+  },
+  {
+    path: 'players',
+    component: PlayerStatisticsComponent,
+    canActivate: [AuthGuard, TeamGuard],
+  },
+  {
+    path: 'players/:id',
+    component: PlayerComponent,
     canActivate: [AuthGuard, TeamGuard],
   },
   {
