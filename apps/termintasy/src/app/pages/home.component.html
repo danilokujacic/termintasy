@@ -1,14 +1,20 @@
-<div class="w-full h-full flex flex-col">
+<div class="w-full px-2 py-2 h-full flex flex-col">
+  <div class="flex justify-between px-2 py-2 font-bold">
+    <p>Team info</p>
+    <p>Points</p>
+  </div>
   <div class="flex flex-col gap-2" *ngIf="teams().length">
     <button
-      class="flex py-2 px-4 justify-between"
+      class="flex items-center py-2 px-4 gap-2 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
       *ngFor="let team of teams(); let i = index"
       (click)="handleTeam(team)"
     >
-      <p>{{ i + 1 }}. {{ team.name }}</p>
-      <p>
-        Pts <b>{{ team.points }}</b>
-      </p>
+      <div class="w-[20px] flex-shrink-0">{{ i + 1 }}.</div>
+      <div class="flex-1 flex flex-col items-start justify-start">
+        <p class="font-semibold">{{ team.name }}</p>
+        <p class="text-sm">{{ team.owner.username }}</p>
+      </div>
+      <p class="px-2 font-semibold flex-shrink-0">{{ team.points }}</p>
     </button>
   </div>
   <div class="flex px-2 pt-2 gap-2">

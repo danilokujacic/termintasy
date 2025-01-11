@@ -4,15 +4,37 @@
   </button>
   <button
     (click)="goToGame(game.id)"
-    class="flex flex-col"
+    class="flex flex-col p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
     *ngFor="let game of games(); let i = index"
   >
-    <h3>Game</h3>
-    <p><span class="font-bold">Team 1</span>: {{ game.homeScore }}</p>
-    <p><span class="font-bold">Team 2</span>: {{ game.awayScore }}</p>
-    <p>
-      <span class="font-bold">Match Date</span>:
-      {{ game.matchDate | date : 'EEEE, dd-MM' }}
-    </p>
+    <h3 class="font-semibold text-center text-lg">
+      Game on {{ game.matchDate | date : 'EEEE, MM/dd/yyyy' }}
+    </h3>
+    <div class="flex w-full pt-2 gap-2">
+      <div class="flex flex-1 items-center justify-between gap-2">
+        <p class="flex-shrink-0 font-bold text-lg">Home</p>
+        <p
+          class="size-[40px] flex items-center justify-center border font-bold text-lg border-gray-500 rounded-sm"
+        >
+          {{ game.homeScore }}
+        </p>
+      </div>
+      <div class="flex flex-1 items-center justify-between gap-2">
+        <p
+          class="size-[40px] flex items-center justify-center border font-bold text-lg border-gray-500 rounded-sm"
+        >
+          {{ game.awayScore }}
+        </p>
+        <p class="flex-shrink-0 font-bold text-lg">Away</p>
+      </div>
+    </div>
+    <!-- <div class="flex">
+      <p class="flex-1 flex">
+        <span class="font-bold">Home</span>: {{ game.homeScore }}
+      </p>
+      <p class="flex-1 flex">
+        {{ game.awayScore }}<span class="font-bold">Away</span>
+      </p>
+    </div> -->
   </button>
 </div>

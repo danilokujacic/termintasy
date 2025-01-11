@@ -42,6 +42,6 @@ export class GameComponent implements OnInit {
   }
 
   goToPlayer(id: number) {
-    this.router.navigate(['/player/' + id]);
+    this.router.navigate(['/players/' + id]);
   }
 }
