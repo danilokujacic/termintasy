@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
+import { FooterComponent } from '../layout/footer.component';
 
 @Component({
   selector: 'app-games',
-  imports: [CommonModule],
+  imports: [CommonModule, FooterComponent],
   templateUrl: './games.component.html',
   styleUrl: './games.component.css',
 })

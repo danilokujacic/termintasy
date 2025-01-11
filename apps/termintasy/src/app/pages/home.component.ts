@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../user/user.service';
 import { UserTeamsService } from '../user-teams/user-teams.service';
 import { Router } from '@angular/router';
+import { FooterComponent } from '../layout/footer.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule],
+  imports: [CommonModule, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

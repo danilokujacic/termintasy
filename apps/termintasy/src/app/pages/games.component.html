@@ -1,10 +1,9 @@
-<div class="w-full h-full gap-4 flex flex-col px-2 py-4 overflow-auto">
-  <button class="underline text-blue-500" (click)="backToTable()">
-    Back to Table
-  </button>
+<div
+  class="w-full h-full gap-4 flex flex-col px-2 py-4 overflow-auto pb-[150px]"
+>
   <button
     (click)="goToGame(game.id)"
-    class="flex flex-col p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+    class="flex flex-col p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
     *ngFor="let game of games(); let i = index"
   >
     <h3 class="font-semibold text-center text-lg">
@@ -28,13 +27,6 @@
         <p class="flex-shrink-0 font-bold text-lg">Away</p>
       </div>
     </div>
-    <!-- <div class="flex">
-      <p class="flex-1 flex">
-        <span class="font-bold">Home</span>: {{ game.homeScore }}
-      </p>
-      <p class="flex-1 flex">
-        {{ game.awayScore }}<span class="font-bold">Away</span>
-      </p>
-    </div> -->
   </button>
 </div>
+<app-footer></app-footer>

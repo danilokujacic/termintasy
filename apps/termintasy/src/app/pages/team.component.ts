@@ -8,10 +8,16 @@ import { LayoutComponent } from '../layout/layout.component';
 import { UserService } from '../user/user.service';
 import { PlayersWrapperComponent } from '../create-team/players-wrapper.component';
 import { PlayersService } from '../create-team/players.service';
+import { FooterComponent } from '../layout/footer.component';
 
 @Component({
   selector: 'app-team',
-  imports: [CommonModule, LayoutComponent, PlayersWrapperComponent],
+  imports: [
+    CommonModule,
+    LayoutComponent,
+    PlayersWrapperComponent,
+    FooterComponent,
+  ],
   templateUrl: './team.component.html',
   styleUrl: './team.component.css',
 })
