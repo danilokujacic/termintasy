@@ -30,9 +30,12 @@ export class TeamComponent implements OnInit {
     atk1: null,
     atk2: null,
   });
+  teamCaptain = signal<number | null>(null);
+  teamCaptainTemp = signal<number | null>(null);
   playersDrawer = signal<boolean | string>(false);
   teamId = signal<string>('');
   teamPlayers = signal<any[]>([]);
+  captainMode = signal(false);
   transferComponent = signal(false);
   currentTeamPlayer = signal<number | null>(null);
   playersToTransfer = signal<[number, number][]>([]);
@@ -59,6 +62,10 @@ export class TeamComponent implements OnInit {
     private router: Router,
     private playersService: PlayersService
   ) {}
+
+  toggleCaptain() {
+    this.captainMode.set(true);
+  }
 
   playerPoints(player: any) {
     const gameStats = player?.gameStats?.[0];
@@ -88,6 +95,8 @@ export class TeamComponent implements OnInit {
         });
 
         this.teamId.set(data.id);
+        this.teamCaptain.set(data.captain.id);
+        this.teamCaptainTemp.set(data.captain.id);
 
         this.transfers.set(data.transfers);
         this.teamPlayers.set(data.players);
@@ -116,11 +125,33 @@ export class TeamComponent implements OnInit {
       });
   }
 
+  setCaptain(id: number) {
+    this.teamCaptainTemp.set(id);
+  }
+
+  newCaptain() {
+    return this.http
+      .post(
+        environment.apiUrl +
+          '/user-team/' +
+          this.teamId() +
+          '/set-captain/' +
+          this.teamCaptainTemp(),
+        null
+      )
+      .subscribe(() => {
+        window.location.reload();
+      });
+  }
+
   queryPlayers(
     position: 'GK' | 'ATK' | 'MID' | 'DEF',
     mapPosition: 'gk' | 'def1' | 'def2' | 'mid' | 'atk1' | 'atk2',
     player: any
   ) {
+    if (this.captainMode()) {
+      return this.teamCaptainTemp.set(player.id);
+    }
     if (!this.isOwner()) return;
     this.playersService.getPlayers(position).subscribe((data) => {
       this.playersService.playerState.set({ loading: false, data });
@@ -140,7 +171,9 @@ export class TeamComponent implements OnInit {
 
     this.selectedPlayers.set([
       ...playersThatAreTransfered.map((player) => player.name),
-      ...teamPlayers.map((player: any) => player.name),
+      ...teamPlayers
+        .filter((player) => !!player)
+        .map((player: any) => player?.name),
       player.name,
     ]);
 

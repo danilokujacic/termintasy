@@ -17,62 +17,104 @@
         </p>
       </div>
       <button
-        *ngIf="playersToTransferTeamPlayersDif().length"
+        *ngIf="playersToTransferTeamPlayersDif().length; else captain"
         (click)="makeTransfer()"
         class="text-blue-500"
       >
         Transfer
       </button>
+      <ng-template #captain>
+        <button
+          role="button"
+          (click)="
+            teamCaptainTemp() === teamCaptain() ? toggleCaptain() : newCaptain()
+          "
+          class="underline text-blue-500"
+        >
+          {{
+            captainMode() && teamCaptainTemp() !== teamCaptain()
+              ? 'Make captain'
+              : 'Change captain'
+          }}
+        </button>
+        <button (click)="captainMode.set(false)" *ngIf="captainMode()">
+          Cancel
+        </button>
+      </ng-template>
     </div>
 
     <div class="flex-1 relative soccer-field">
       <div class="absolute bottom-[28%] w-full">
         <button
+          (dblclick)="setCaptain(players().gk?.id)"
           (click)="queryPlayers('GK', 'gk', players().gk)"
           role="button"
           class="player-box left-1/2 -translate-x-1/2 absolute"
         >
+          <span *ngIf="players().gk?.id === teamCaptainTemp()" class="captain"
+            >C</span
+          >
           {{ players().gk ? players().gk!.name : 'GK' }}
           {{ players().gk ? playerPoints(players().gk) : 0 }}
         </button>
       </div>
       <div class="absolute bottom-[48%] w-full">
         <button
+          (dblclick)="setCaptain(players().def1?.id)"
           (click)="queryPlayers('DEF', 'def1', players().def1)"
           class="player-box left-[8%] absolute"
         >
+          <span *ngIf="players().def1?.id === teamCaptainTemp()" class="captain"
+            >C</span
+          >
           {{ players().def1 ? players().def1.name : 'DEF' }}
           {{ players().def1 ? playerPoints(players().def1) : 0 }}
         </button>
         <button
+          (dblclick)="setCaptain(players().def2?.id)"
           (click)="queryPlayers('DEF', 'def2', players().def2)"
           class="player-box right-[8%] absolute"
         >
+          <span *ngIf="players().def2?.id === teamCaptainTemp()" class="captain"
+            >C</span
+          >
           {{ players().def2 ? players().def2.name : 'DEF' }}
           {{ players().def2 ? playerPoints(players().def2) : 0 }}
         </button>
       </div>
       <div class="absolute bottom-[70%] w-full">
         <button
+          (dblclick)="setCaptain(players().mid?.id)"
           (click)="queryPlayers('MID', 'mid', players().mid)"
           class="player-box left-1/2 -translate-x-1/2 absolute"
         >
+          <span *ngIf="players().mid?.id === teamCaptainTemp()" class="captain"
+            >c</span
+          >
           {{ players().mid ? players().mid.name : 'MID' }}
           {{ players().mid ? playerPoints(players().mid) : 0 }}
         </button>
       </div>
       <div class="absolute top-[5%] w-full">
         <button
+          (dblclick)="setCaptain(players().atk1?.id)"
           (click)="queryPlayers('ATK', 'atk1', players().atk1)"
           class="player-box left-[8%] absolute"
         >
+          <span *ngIf="players().atk1?.id === teamCaptainTemp()" class="captain"
+            >C</span
+          >
           {{ players().atk1 ? players().atk1.name : 'ATK' }}
           {{ players().atk1 ? playerPoints(players().atk1) : 0 }}
         </button>
         <button
+          (dblclick)="setCaptain(players().atk2?.id)"
           (click)="queryPlayers('ATK', 'atk2', players().atk2)"
           class="player-box right-[8%] absolute"
         >
+          <span *ngIf="players().atk2?.id === teamCaptainTemp()" class="captain"
+            >C</span
+          >
           {{ players().atk2 ? players().atk2.name : 'ATK' }}
           {{ players().atk2 ? playerPoints(players().atk2) : 0 }}
         </button>

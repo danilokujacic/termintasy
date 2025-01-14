@@ -5,3 +5,6 @@
 .player-box {
   @apply w-[70px] h-[100px] rounded-sm bg-white flex items-center justify-center;
 }
+.captain {
+  @apply bg-gray-800 text-white absolute w-5 h-5 flex items-center justify-center right-1 top-1;
+}
