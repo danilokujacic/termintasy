@@ -26,6 +26,7 @@
       <ng-template #captain>
         <button
           role="button"
+          *ngIf="isOwner()"
           (click)="
             teamCaptainTemp() === teamCaptain() ? toggleCaptain() : newCaptain()
           "
@@ -37,7 +38,10 @@
               : 'Change captain'
           }}
         </button>
-        <button (click)="captainMode.set(false)" *ngIf="captainMode()">
+        <button
+          (click)="captainMode.set(false)"
+          *ngIf="captainMode() && isOwner()"
+        >
           Cancel
         </button>
       </ng-template>
