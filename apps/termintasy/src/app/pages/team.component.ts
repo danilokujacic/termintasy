@@ -166,7 +166,10 @@ export class TeamComponent implements OnInit {
     const playersDiff = this.playersToTransferTeamPlayersDif();
     const playersThatAreTransfered = this.teamPlayers().filter(
       (player) =>
-        playersDiff.findIndex(([teamPlayer]) => teamPlayer === player.id) !== -1
+        playersDiff.findIndex(
+          ([teamPlayer, awayPlayer]) =>
+            teamPlayer === player.id && awayPlayer === player.id
+        ) !== -1
     );
 
     this.selectedPlayers.set([
