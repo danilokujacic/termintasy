@@ -7,7 +7,7 @@
   ></app-players-wrapper>
   <div class="w-full h-full relative flex flex-col pb-2">
     <div class="flex px-2 justify-between items-center">
-      <div class="flex flex-col h-[60px]">
+      <div class="flex flex-col h-[75px]">
         <p>{{ teamName() }}</p>
         <p *ngIf="typeof transfers() === 'number' && isOwner()">
           Transfers: {{ teamTransfers() >= 0 ? teamTransfers() : 0 }}
@@ -15,6 +15,51 @@
             >{{ teamTransfers() * 4 }} points</span
           >
         </p>
+        <div
+          *ngIf="isOwner() && perks()"
+          class="flex pt-2 justify-center gap-2"
+        >
+          <button
+            role="button"
+            (click)="
+              tripleCaptainActive()
+                ? deactivateTripleCaptain()
+                : activateTripleCaptain()
+            "
+            [disabled]="!perks()?.tripleCaptain"
+            [ngClass]="{
+              'size-5 border disabled:opacity-20 border-gray-500 rounded-sm flex items-center justify-center': true,
+              'border-blue-500 bg-blue-500 text-white':
+                tripleCaptainActive() && perks()?.tripleCaptain
+            }"
+          >
+            C
+          </button>
+          <button
+            role="button"
+            (click)="toggleWildCard()"
+            [disabled]="!perks()?.wildcard"
+            [ngClass]="{
+              'size-5 border disabled:opacity-20 border-gray-500 rounded-sm flex items-center justify-center': true,
+              'border-blue-500 bg-blue-500 text-white':
+                wildCardActive() && perks()?.wildcard
+            }"
+          >
+            W
+          </button>
+          <button
+            role="button"
+            (click)="toggleFreeHit()"
+            [disabled]="!perks()?.freehit"
+            [ngClass]="{
+              'size-5 border disabled:opacity-20 border-gray-500 rounded-sm flex items-center justify-center': true,
+              'border-blue-500 bg-blue-500 text-white':
+                freeHitActive() && perks()?.freehit
+            }"
+          >
+            F
+          </button>
+        </div>
       </div>
       <button
         *ngIf="playersToTransferTeamPlayersDif().length; else captain"
