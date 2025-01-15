@@ -30,6 +30,14 @@ export class TeamComponent implements OnInit {
     atk1: null,
     atk2: null,
   });
+  initalPlayers = signal<any>({
+    gk: null,
+    def1: null,
+    def2: null,
+    mid: null,
+    atk1: null,
+    atk2: null,
+  });
   teamCaptain = signal<number | null>(null);
   teamCaptainTemp = signal<number | null>(null);
   perks = signal<{
@@ -44,6 +52,7 @@ export class TeamComponent implements OnInit {
   freeHitActive = signal(false);
   wildCardActive = signal(false);
   captainMode = signal(false);
+  activeGame = signal(true);
   transferComponent = signal(false);
   currentTeamPlayer = signal<number | null>(null);
   playersToTransfer = signal<[number, number][]>([]);
@@ -102,6 +111,12 @@ export class TeamComponent implements OnInit {
           this.isOwner.set(user.id === data.ownerId);
         });
 
+        this.http
+          .get(environment.apiUrl + '/game/active-game')
+          .subscribe((data: any) => {
+            this.activeGame.set(!!data.game);
+          });
+
         this.teamId.set(data.id);
         this.teamCaptain.set(data.captain.id);
         this.teamCaptainTemp.set(data.captain.id);
@@ -134,6 +149,7 @@ export class TeamComponent implements OnInit {
           }
         });
         this.players.set(players);
+        this.initalPlayers.set(players);
         this.teamName.set(data.name);
       });
   }
@@ -196,6 +212,7 @@ export class TeamComponent implements OnInit {
     mapPosition: 'gk' | 'def1' | 'def2' | 'mid' | 'atk1' | 'atk2',
     player: any
   ) {
+    if (this.activeGame()) return;
     if (this.captainMode()) {
       return this.teamCaptainTemp.set(player.id);
     }
@@ -227,7 +244,7 @@ export class TeamComponent implements OnInit {
       player.name,
     ]);
 
-    this.currentTeamPlayer.set(player.id);
+    this.currentTeamPlayer.set(this.initalPlayers()[mapPosition]?.id);
   }
 
   makeTransfer() {
