@@ -30,6 +30,14 @@ export class TeamComponent implements OnInit {
     atk1: null,
     atk2: null,
   });
+  initalPlayers = signal<any>({
+    gk: null,
+    def1: null,
+    def2: null,
+    mid: null,
+    atk1: null,
+    atk2: null,
+  });
   teamCaptain = signal<number | null>(null);
   teamCaptainTemp = signal<number | null>(null);
   playersDrawer = signal<boolean | string>(false);
@@ -128,6 +136,7 @@ export class TeamComponent implements OnInit {
           }
         });
         this.players.set(players);
+        this.initalPlayers.set(players);
         this.teamName.set(data.name);
       });
   }
@@ -188,7 +197,7 @@ export class TeamComponent implements OnInit {
       player.name,
     ]);
 
-    this.currentTeamPlayer.set(player.id);
+    this.currentTeamPlayer.set(this.initalPlayers()[mapPosition]?.id);
   }
 
   makeTransfer() {
