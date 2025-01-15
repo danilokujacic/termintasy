@@ -36,6 +36,7 @@ export class TeamComponent implements OnInit {
   teamId = signal<string>('');
   teamPlayers = signal<any[]>([]);
   captainMode = signal(false);
+  activeGame = signal(true);
   transferComponent = signal(false);
   currentTeamPlayer = signal<number | null>(null);
   playersToTransfer = signal<[number, number][]>([]);
@@ -94,6 +95,12 @@ export class TeamComponent implements OnInit {
           this.isOwner.set(user.id === data.ownerId);
         });
 
+        this.http
+          .get(environment.apiUrl + '/game/active-game')
+          .subscribe((data: any) => {
+            this.activeGame.set(!!data.game);
+          });
+
         this.teamId.set(data.id);
         this.teamCaptain.set(data.captain.id);
         this.teamCaptainTemp.set(data.captain.id);
@@ -149,6 +156,7 @@ export class TeamComponent implements OnInit {
     mapPosition: 'gk' | 'def1' | 'def2' | 'mid' | 'atk1' | 'atk2',
     player: any
   ) {
+    if (this.activeGame()) return;
     if (this.captainMode()) {
       return this.teamCaptainTemp.set(player.id);
     }
