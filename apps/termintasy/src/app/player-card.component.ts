@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 })
 export class PlayerCardComponent {
   @Input() player: any;
+  @Input() points?: number | null;
   @Input() captain: boolean;
   @Output() queryPlayers = new EventEmitter();
 
