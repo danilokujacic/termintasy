@@ -10,6 +10,8 @@
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "serviceWorker": true,
+        "ngswConfigPath": "apps/termintasy/src/ngsw-config.json",
         "outputPath": "dist/apps/termintasy",
         "index": "apps/termintasy/src/index.html",
         "browser": "apps/termintasy/src/main.ts",
