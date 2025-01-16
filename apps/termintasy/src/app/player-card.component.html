@@ -13,8 +13,15 @@
     />
   </div>
   <div
-    class="bg-white player-name py-1 whitespace-nowrap flex-shrink-0 overflow-hidden w-full px-1 text-ellipsis"
+    class="bg-white flex flex-col player-name py-1 whitespace-nowrap flex-shrink-0 overflow-hidden w-full px-1 text-ellipsis"
   >
-    {{ player.name }}
+    <span>
+      {{ player.name }}
+    </span>
+    <span
+      *ngIf="player.points"
+      class="font-bold self-center text-center block"
+      >{{ player.points }}</span
+    >
   </div>
 </button>
