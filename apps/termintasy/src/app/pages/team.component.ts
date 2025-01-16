@@ -9,12 +9,14 @@ import { UserService } from '../user/user.service';
 import { PlayersWrapperComponent } from '../create-team/players-wrapper.component';
 import { PlayersService } from '../create-team/players.service';
 import { FooterComponent } from '../layout/footer.component';
+import { PlayerCardComponent } from '../player-card.component';
 
 @Component({
   selector: 'app-team',
   imports: [
     CommonModule,
     LayoutComponent,
+    PlayerCardComponent,
     PlayersWrapperComponent,
     FooterComponent,
   ],

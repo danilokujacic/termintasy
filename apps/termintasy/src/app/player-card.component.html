@@ -1,0 +1,20 @@
+<button
+  title="Playeer"
+  class="w-[70px] h-[100px]"
+  role="button"
+  (click)="onQueryPlayers()"
+>
+  <span *ngIf="captain" class="captain">C</span>
+  <div class="profile-image h-[90px] w-full">
+    <img
+      class="w-full h-full object-fill"
+      alt="player"
+      [src]="player.image ? player.image : 'player.jpg'"
+    />
+  </div>
+  <div
+    class="bg-white player-name py-1 whitespace-nowrap flex-shrink-0 overflow-hidden w-full px-1 text-ellipsis"
+  >
+    {{ player.name }}
+  </div>
+</button>
