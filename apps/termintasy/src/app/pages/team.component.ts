@@ -10,6 +10,7 @@ import { PlayersWrapperComponent } from '../create-team/players-wrapper.componen
 import { PlayersService } from '../create-team/players.service';
 import { FooterComponent } from '../layout/footer.component';
 import { PlayerCardComponent } from '../player-card.component';
+import { PlayerViewDrawerComponent } from '../player-view-drawer/player-view-drawer.component';
 
 @Component({
   selector: 'app-team',
@@ -17,6 +18,7 @@ import { PlayerCardComponent } from '../player-card.component';
     CommonModule,
     LayoutComponent,
     PlayerCardComponent,
+    PlayerViewDrawerComponent,
     PlayersWrapperComponent,
     FooterComponent,
   ],
@@ -42,6 +44,7 @@ export class TeamComponent implements OnInit {
   });
   teamCaptain = signal<number | null>(null);
   teamCaptainTemp = signal<number | null>(null);
+  playerViewDrawer = signal(false);
   perks = signal<{
     tripleCaptain: number;
     wildcard: number;
@@ -56,12 +59,15 @@ export class TeamComponent implements OnInit {
   captainMode = signal(false);
   activeGame = signal(true);
   transferComponent = signal(false);
+  playerPosition = signal<null | string>(null);
   currentTeamPlayer = signal<number | null>(null);
   playersToTransfer = signal<[number, number][]>([]);
   teamPlayersToSend = signal<number[]>([]);
+  previewPlayer = signal<any>(null);
   selectedPlayers = signal<string[]>([]);
   transfers = signal<number | null>(null);
   isOwner = signal(false);
+  mapPosition = signal<string | null>(null);
   teamTransfers = computed(
     () =>
       (this.transfers() ?? 0) - this.playersToTransferTeamPlayersDif().length
@@ -73,6 +79,14 @@ export class TeamComponent implements OnInit {
       );
     })
   );
+  isNotTeamPlayer = computed(() => {
+    return (
+      !!this.teamPlayers()?.length &&
+      this.teamPlayers().findIndex(
+        (el) => el.id === this.previewPlayer()?.id
+      ) !== -1
+    );
+  });
   teamName = signal('');
   constructor(
     private route: ActivatedRoute,
@@ -82,8 +96,28 @@ export class TeamComponent implements OnInit {
     private playersService: PlayersService
   ) {}
 
+  onTransfer({ player, mapPos }: any) {
+    this.closePlayerPreview();
+
+    return this.queryPlayers(player.position, mapPos, player);
+  }
+
+  closePlayerPreview() {
+    this.playerViewDrawer.set(false);
+    this.previewPlayer.set(null);
+  }
+  closeDrawer() {
+    this.playerPosition.set(null);
+    this.playersDrawer.set(false);
+  }
+
   toggleCaptain() {
     this.captainMode.set(true);
+  }
+
+  openPlayerPreview({ player, mapPos }: any) {
+    this.previewPlayer.set({ id: player.id, mapPos });
+    this.playerViewDrawer.set(true);
   }
 
   playerPoints(player: any) {
@@ -194,18 +228,19 @@ export class TeamComponent implements OnInit {
       });
   }
 
-  newCaptain() {
+  newCaptain(playerId: number) {
     return this.http
       .post(
         environment.apiUrl +
           '/user-team/' +
           this.teamId() +
           '/set-captain/' +
-          this.teamCaptainTemp(),
+          playerId,
         null
       )
       .subscribe(() => {
-        window.location.reload();
+        this.closePlayerPreview();
+        this.teamCaptainTemp.set(playerId);
       });
   }
 
@@ -219,11 +254,10 @@ export class TeamComponent implements OnInit {
       return this.teamCaptainTemp.set(player.id);
     }
     if (!this.isOwner()) return;
-    this.playersService.getPlayers(position).subscribe((data) => {
-      this.playersService.playerState.set({ loading: false, data });
-      this.playersDrawer.set(mapPosition);
-    });
+    this.playersDrawer.set(true);
 
+    this.playerPosition.set(position);
+    this.mapPosition.set(mapPosition);
     this.playersToTransfer.update((prevState) =>
       prevState.filter(([_, transferPlayer]) => transferPlayer !== player.id)
     );
@@ -277,6 +311,7 @@ export class TeamComponent implements OnInit {
   onSelect({ player, position }: any) {
     const currentPlayer = this.currentTeamPlayer()!;
     this.playersDrawer.set(false);
+    this.mapPosition.set(null);
 
     this.playersToTransfer.update((prevState) => [
       ...prevState,

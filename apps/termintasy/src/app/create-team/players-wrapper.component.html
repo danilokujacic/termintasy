@@ -1,10 +1,45 @@
-<div class="fixed z-50 bg-white w-full h-full flex flex-col">
-  <div class="flex-1 overflow-auto px-2 flex flex-col gap-2 py-4">
+<div
+  id="drawer-example"
+  class="fixed top-0 flex flex-col z-[99999999] left-0 w-screen h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white pb-[90px] dark:bg-gray-800"
+  tabindex="-1"
+  aria-labelledby="drawer-label"
+>
+  <h5
+    id="drawer-label"
+    class="inline-flex flex-shrink-0 items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"
+  >
+    Players
+  </h5>
+  <button
+    type="button"
+    data-drawer-hide="drawer-example"
+    aria-controls="drawer-example"
+    (click)="closeDrawerEmit()"
+    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white"
+  >
+    <svg
+      class="w-3 h-3"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 14 14"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+      />
+    </svg>
+    <span class="sr-only">Close menu</span>
+  </button>
+  <div class="flex flex-col flex-1 overflow-auto">
     <button
       (click)="onClose(player)"
       [disabled]="isSelected(player)"
       class="border disabled:opacity-30 border-gray-400 rounded-sm cursor-pointer py-2 px-4"
-      *ngFor="let player of players.data"
+      *ngFor="let player of players"
     >
       {{ player.name }}
     </button>

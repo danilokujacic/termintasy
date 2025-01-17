@@ -16,17 +16,16 @@ export class PlayersService {
   });
   constructor(private http: HttpClient) {}
 
-  getPlayers(position: 'GK' | 'ATK' | 'MID' | 'DEF') {
-    return this.http
-      .get(environment.apiUrl + '/player/all?position=' + position)
-      .pipe(
-        tap(() => {
-          this.playerState.update((prevState) => ({
-            ...prevState,
-            loading: true,
-          }));
-        })
-      );
+  getPlayers(position?: 'GK' | 'ATK' | 'MID' | 'DEF') {
+    return this.http.get(
+      `${environment.apiUrl}/player/all${
+        position ? '?position=' + position : ''
+      }`
+    );
+  }
+
+  getPlayer(id: number) {
+    return this.http.get(environment.apiUrl + '/player/' + id);
   }
 
   createTeam(player: number[], teamName: string) {
