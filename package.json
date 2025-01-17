@@ -11,10 +11,10 @@
   },
   "private": true,
   "browserslist": [
-    "Chrome >=99",
-   " Firefox >=99",
-    "Safari>=13",
-    "iOS >=13"
+    "last 2 versions",
+    "Safari >= 11",
+    "iOS >= 11",
+    "Chrome >= 49"
   ],
   "dependencies": {
     "@angular/animations": "~19.0.0",
