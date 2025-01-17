@@ -9,13 +9,15 @@
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
+
       "options": {
         "outputPath": "dist/apps/termintasy",
         "index": "apps/termintasy/src/index.html",
         "browser": "apps/termintasy/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": ["zone.js", "core-js/stable"],
         "tsConfig": "apps/termintasy/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
+
         "assets": [
           {
             "glob": "**/*",
