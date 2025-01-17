@@ -142,15 +142,17 @@
           </button>
         </div>
         <ng-container *ngIf="player.gameStats && player.gameStats.length">
-          <div
-            class="w-[250px] h-[60px] flex-shrink-0 border border-gray-400 rounded-sm"
-            *ngFor="let gameStat of player.gameStats"
-          >
-            <p>On {{ gameStat.createdAt | date : 'dd-MM-yyyy' }}</p>
-            <p>Goals: {{ gameStat.goals }}</p>
-            <p>Assists: {{ gameStat.assists }}</p>
-            <p>Clean sheets: {{ gameStat.cleanSheet }}</p>
-            <p>Points: {{ gameStat.points }}</p>
+          <div class="flex gap-2 overflow-x-auto">
+            <div
+              class="w-[250px] p-2 flex-shrink-0 border border-gray-400 rounded-sm"
+              *ngFor="let gameStat of player.gameStats"
+            >
+              <p>On {{ gameStat.createdAt | date : 'dd-MM-yyyy' }}</p>
+              <p>Goals: {{ gameStat.goals }}</p>
+              <p>Assists: {{ gameStat.assists }}</p>
+              <p>Clean sheets: {{ gameStat.cleanSheet }}</p>
+              <p>Points: {{ gameStat.points }}</p>
+            </div>
           </div>
         </ng-container>
       </div>
