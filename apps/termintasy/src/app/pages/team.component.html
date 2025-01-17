@@ -11,7 +11,7 @@
   <app-player-view-drawer
     [selectedPlayer]="previewPlayer()"
     [open]="playerViewDrawer()"
-    [disableTransfer]="isNotTeamPlayer()"
+    [disableTransfer]="isNotTeamPlayer() && isOwner() && !activeGame()"
     [teamCaptainId]="teamCaptainTemp()"
     (openTransfers)="onTransfer($event)"
     (makeCaptain)="newCaptain($event)"
