@@ -10,6 +10,12 @@
     "seed": "node --loader ts-node/esm apps/termintasy-backend/prisma/seed.ts"
   },
   "private": true,
+  "browserslist": [
+    "last 2 versions",
+    "Safari >= 11",
+    "iOS >= 11",
+    "Chrome >= 49"
+  ],
   "dependencies": {
     "@angular/animations": "~19.0.0",
     "@angular/common": "~19.0.0",
@@ -34,6 +40,7 @@
     "bull": "^4.16.5",
     "bullmq": "^5.34.6",
     "class-validator": "^0.14.1",
+    "core-js": "^3.40.0",
     "dotenv": "^16.4.7",
     "flowbite": "^2.5.2",
     "ioredis": "^5.4.2",
@@ -68,6 +75,7 @@
     "@swc/helpers": "~0.5.11",
     "@types/bcrypt": "^5.0.2",
     "@types/bull": "^3.15.9",
+    "@types/core-js": "^2.5.8",
     "@types/jest": "^29.5.12",
     "@types/node": "^18.19.70",
     "@typescript-eslint/utils": "^8.13.0",
