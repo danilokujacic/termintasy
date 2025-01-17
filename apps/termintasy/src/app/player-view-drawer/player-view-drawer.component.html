@@ -94,7 +94,7 @@
         </div>
         <div class="flex gap-2 py-2">
           <button
-            *ngIf="teamCaptainId !== player.id && disableTransfer"
+            *ngIf="teamCaptainId !== player.id && enableTeamPlayer"
             type="button"
             (click)="onCaptainSelect()"
             class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"

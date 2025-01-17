@@ -14,6 +14,7 @@ export class PlayerViewDrawerComponent {
   @Output() makeCaptain = new EventEmitter();
   @Output() openTransfers = new EventEmitter();
   @Input() disableTransfer = false;
+  @Input() enableTeamPlayer = false;
   @Input() teamCaptainId: number | null = null;
   player: any = {};
   loading = false;
