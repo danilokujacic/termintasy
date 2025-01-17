@@ -20,9 +20,11 @@
           {
             "glob": "**/*",
             "input": "apps/termintasy/public"
-          }
+          },
+          "apps/termintasy/src/manifest.webmanifest"
         ],
         "styles": ["apps/termintasy/src/styles.scss"],
+
         "scripts": []
       },
       "configurations": {

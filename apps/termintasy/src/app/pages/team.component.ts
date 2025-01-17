@@ -9,12 +9,14 @@ import { UserService } from '../user/user.service';
 import { PlayersWrapperComponent } from '../create-team/players-wrapper.component';
 import { PlayersService } from '../create-team/players.service';
 import { FooterComponent } from '../layout/footer.component';
+import { PlayerCardComponent } from '../player-card.component';
 
 @Component({
   selector: 'app-team',
   imports: [
     CommonModule,
     LayoutComponent,
+    PlayerCardComponent,
     PlayersWrapperComponent,
     FooterComponent,
   ],
@@ -40,9 +42,17 @@ export class TeamComponent implements OnInit {
   });
   teamCaptain = signal<number | null>(null);
   teamCaptainTemp = signal<number | null>(null);
+  perks = signal<{
+    tripleCaptain: number;
+    wildcard: number;
+    freehit: number;
+  } | null>(null);
   playersDrawer = signal<boolean | string>(false);
   teamId = signal<string>('');
   teamPlayers = signal<any[]>([]);
+  tripleCaptainActive = signal(false);
+  freeHitActive = signal(false);
+  wildCardActive = signal(false);
   captainMode = signal(false);
   activeGame = signal(true);
   transferComponent = signal(false);
@@ -112,7 +122,12 @@ export class TeamComponent implements OnInit {
         this.teamId.set(data.id);
         this.teamCaptain.set(data.captain.id);
         this.teamCaptainTemp.set(data.captain.id);
-
+        this.tripleCaptainActive.set(data.tripleCaptainActive);
+        this.perks.set({
+          tripleCaptain: data.tripleCaptain,
+          wildcard: data.wildCard,
+          freehit: data.freeHit,
+        });
         this.transfers.set(data.transfers);
         this.teamPlayers.set(data.players);
         data.players.forEach((player: any) => {
@@ -143,6 +158,40 @@ export class TeamComponent implements OnInit {
 
   setCaptain(id: number) {
     this.teamCaptainTemp.set(id);
+  }
+
+  toggleFreeHit() {
+    this.freeHitActive.update((prevValue) => !prevValue);
+  }
+  toggleWildCard() {
+    this.wildCardActive.update((prevValue) => !prevValue);
+  }
+
+  activateTripleCaptain() {
+    return this.http
+      .put(
+        environment.apiUrl +
+          '/user-team/' +
+          this.teamId() +
+          '/activate-triple-captain',
+        null
+      )
+      .subscribe(() => {
+        window.location.reload();
+      });
+  }
+  deactivateTripleCaptain() {
+    return this.http
+      .put(
+        environment.apiUrl +
+          '/user-team/' +
+          this.teamId() +
+          '/deactivate-triple-captain',
+        null
+      )
+      .subscribe(() => {
+        window.location.reload();
+      });
   }
 
   newCaptain() {
@@ -201,12 +250,17 @@ export class TeamComponent implements OnInit {
   }
 
   makeTransfer() {
+    const query = [
+      ['wildCard', this.wildCardActive()],
+      ['freeHit', this.freeHitActive()],
+    ].filter(([_, queryParam]) => !!queryParam)[0];
     this.http
       .post(
         environment.apiUrl +
           '/user-team/' +
           this.teamId() +
-          '/transfer-players',
+          '/transfer-players' +
+          (query ? `?${query[0]}=${query[1]}` : ''),
         {
           players: this.playersToTransferTeamPlayersDif().map(
             ([teamPlayer]) => teamPlayer

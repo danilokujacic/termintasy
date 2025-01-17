@@ -13,7 +13,7 @@ export function tokenInterceptor(
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
   const router = inject(Router);
-  const token = sessionStorage.getItem('token');
+  const token = localStorage.getItem('token');
   if (!token) {
     router.navigate(['login']);
 
@@ -32,7 +32,7 @@ export function tokenInterceptor(
       // If we get a 401 Unauthorized response
       if (error.status === 403) {
         // Remove token from session storage
-        sessionStorage.removeItem('token');
+        localStorage.removeItem('token');
 
         // Redirect to login page
         router.navigate(['login']);

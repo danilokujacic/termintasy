@@ -7,14 +7,63 @@
   ></app-players-wrapper>
   <div class="w-full h-full relative flex flex-col pb-2">
     <div class="flex px-2 justify-between items-center">
-      <div class="flex flex-col h-[60px]">
-        <p>{{ teamName() }}</p>
+      <div class="flex flex-col h-[75px] overflow-hidden">
+        <p
+          class="flex-1 overflow-hidden w-full whitespace-nowrap text-ellipsis"
+        >
+          {{ teamName() }}
+        </p>
         <p *ngIf="typeof transfers() === 'number' && isOwner()">
           Transfers: {{ teamTransfers() >= 0 ? teamTransfers() : 0 }}
           <span *ngIf="teamTransfers() < 0"
             >{{ teamTransfers() * 4 }} points</span
           >
         </p>
+        <div
+          *ngIf="isOwner() && perks()"
+          class="flex pt-2 justify-center gap-2"
+        >
+          <button
+            role="button"
+            (click)="
+              tripleCaptainActive()
+                ? deactivateTripleCaptain()
+                : activateTripleCaptain()
+            "
+            [disabled]="!perks()?.tripleCaptain"
+            [ngClass]="{
+              'size-5 border disabled:opacity-20 border-gray-500 rounded-sm flex items-center justify-center': true,
+              'border-blue-500 bg-blue-500 text-white':
+                tripleCaptainActive() && perks()?.tripleCaptain
+            }"
+          >
+            C
+          </button>
+          <button
+            role="button"
+            (click)="toggleWildCard()"
+            [disabled]="!perks()?.wildcard"
+            [ngClass]="{
+              'size-5 border disabled:opacity-20 border-gray-500 rounded-sm flex items-center justify-center': true,
+              'border-blue-500 bg-blue-500 text-white':
+                wildCardActive() && perks()?.wildcard
+            }"
+          >
+            W
+          </button>
+          <button
+            role="button"
+            (click)="toggleFreeHit()"
+            [disabled]="!perks()?.freehit"
+            [ngClass]="{
+              'size-5 border disabled:opacity-20 border-gray-500 rounded-sm flex items-center justify-center': true,
+              'border-blue-500 bg-blue-500 text-white':
+                freeHitActive() && perks()?.freehit
+            }"
+          >
+            F
+          </button>
+        </div>
       </div>
       <button
         *ngIf="playersToTransferTeamPlayersDif().length; else captain"
@@ -48,74 +97,61 @@
     </div>
 
     <div class="flex-1 relative soccer-field">
-      <div class="absolute bottom-[28%] w-full">
-        <button
-          (click)="queryPlayers('GK', 'gk', players().gk)"
-          role="button"
+      <div class="absolute bottom-[35%] w-full">
+        <app-player-card
+          [points]="playerPoints(players().gk)"
+          *ngIf="players().gk"
+          [player]="players().gk"
+          (queryPlayers)="queryPlayers('GK', 'gk', players().gk)"
+          [captain]="players().gk?.id === teamCaptainTemp()"
           class="player-box left-1/2 -translate-x-1/2 absolute"
-        >
-          <span *ngIf="players().gk?.id === teamCaptainTemp()" class="captain"
-            >C</span
-          >
-          {{ players().gk ? players().gk!.name : 'GK' }}
-          {{ players().gk ? playerPoints(players().gk) : 0 }}
-        </button>
+        ></app-player-card>
       </div>
       <div class="absolute bottom-[48%] w-full">
-        <button
-          (click)="queryPlayers('DEF', 'def1', players().def1)"
+        <app-player-card
+          [points]="playerPoints(players().def1)"
+          *ngIf="players().def1"
+          [player]="players().def1"
+          (queryPlayers)="queryPlayers('DEF', 'def1', players().def2)"
+          [captain]="players().def1?.id === teamCaptainTemp()"
           class="player-box left-[8%] absolute"
-        >
-          <span *ngIf="players().def1?.id === teamCaptainTemp()" class="captain"
-            >C</span
-          >
-          {{ players().def1 ? players().def1.name : 'DEF' }}
-          {{ players().def1 ? playerPoints(players().def1) : 0 }}
-        </button>
-        <button
-          (click)="queryPlayers('DEF', 'def2', players().def2)"
+        ></app-player-card>
+        <app-player-card
+          [points]="playerPoints(players().def2)"
+          *ngIf="players().def2"
+          [player]="players().def2"
+          (queryPlayers)="queryPlayers('DEF', 'def2', players().def2)"
+          [captain]="players().def2?.id === teamCaptainTemp()"
           class="player-box right-[8%] absolute"
-        >
-          <span *ngIf="players().def2?.id === teamCaptainTemp()" class="captain"
-            >C</span
-          >
-          {{ players().def2 ? players().def2.name : 'DEF' }}
-          {{ players().def2 ? playerPoints(players().def2) : 0 }}
-        </button>
+        ></app-player-card>
       </div>
       <div class="absolute bottom-[70%] w-full">
-        <button
-          (click)="queryPlayers('MID', 'mid', players().mid)"
+        <app-player-card
+          [points]="playerPoints(players().mid)"
+          *ngIf="players().mid"
+          [player]="players().mid"
+          (queryPlayers)="queryPlayers('MID', 'mid', players().mid)"
+          [captain]="players().mid?.id === teamCaptainTemp()"
           class="player-box left-1/2 -translate-x-1/2 absolute"
-        >
-          <span *ngIf="players().mid?.id === teamCaptainTemp()" class="captain"
-            >c</span
-          >
-          {{ players().mid ? players().mid.name : 'MID' }}
-          {{ players().mid ? playerPoints(players().mid) : 0 }}
-        </button>
+        ></app-player-card>
       </div>
       <div class="absolute top-[5%] w-full">
-        <button
-          (click)="queryPlayers('ATK', 'atk1', players().atk1)"
+        <app-player-card
+          [points]="playerPoints(players().atk1)"
+          *ngIf="players().atk1"
+          [player]="players().atk1"
+          (queryPlayers)="queryPlayers('ATK', 'atk1', players().atk1)"
+          [captain]="players().atk1?.id === teamCaptainTemp()"
           class="player-box left-[8%] absolute"
-        >
-          <span *ngIf="players().atk1?.id === teamCaptainTemp()" class="captain"
-            >C</span
-          >
-          {{ players().atk1 ? players().atk1.name : 'ATK' }}
-          {{ players().atk1 ? playerPoints(players().atk1) : 0 }}
-        </button>
-        <button
-          (click)="queryPlayers('ATK', 'atk2', players().atk2)"
+        ></app-player-card>
+        <app-player-card
+          [points]="playerPoints(players().atk2)"
+          *ngIf="players().atk2"
+          [player]="players().atk2"
+          (queryPlayers)="queryPlayers('ATK', 'atk2', players().atk2)"
+          [captain]="players().atk2?.id === teamCaptainTemp()"
           class="player-box right-[8%] absolute"
-        >
-          <span *ngIf="players().atk2?.id === teamCaptainTemp()" class="captain"
-            >C</span
-          >
-          {{ players().atk2 ? players().atk2.name : 'ATK' }}
-          {{ players().atk2 ? playerPoints(players().atk2) : 0 }}
-        </button>
+        ></app-player-card>
       </div>
     </div>
   </div>

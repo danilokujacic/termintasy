@@ -1,0 +1,6 @@
+.captain {
+  @apply bg-gray-800 text-white absolute w-5 h-5 flex items-center justify-center right-1 top-1;
+}
+.player-name {
+  font-size: 8px;
+}

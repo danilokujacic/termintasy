@@ -27,7 +27,7 @@ export class GmailComponent implements OnInit {
 
       if (accessTokenMatch && accessTokenMatch[1]) {
         this.accessToken = accessTokenMatch[1]; // Store the access token
-        sessionStorage.removeItem('token');
+        localStorage.removeItem('token');
         this.http
           .get('https://www.googleapis.com/oauth2/v3/userinfo', {
             headers: {
@@ -43,7 +43,7 @@ export class GmailComponent implements OnInit {
             )
           )
           .subscribe((data) => {
-            sessionStorage.setItem('token', data.token);
+            localStorage.setItem('token', data.token);
             this.router.navigate(['']);
           });
       } else {

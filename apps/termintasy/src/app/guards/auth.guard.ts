@@ -9,7 +9,7 @@ import { map } from 'rxjs';
 class AuthGuard implements CanActivate {
   constructor(private router: Router, private userService: UserService) {}
   canActivate() {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
     if (!token) {
       this.router.navigate(['login']);
