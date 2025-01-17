@@ -14,7 +14,13 @@
         "outputPath": "dist/apps/termintasy",
         "index": "apps/termintasy/src/index.html",
         "browser": "apps/termintasy/src/main.ts",
-        "polyfills": ["zone.js", "core-js/stable"],
+        "polyfills": [
+          "core-js/stable",
+          "core-js/es/promise",
+          "core-js/es/array",
+          "core-js/es/string",
+          "zone.js"
+        ],
         "tsConfig": "apps/termintasy/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
 
