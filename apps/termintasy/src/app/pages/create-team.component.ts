@@ -27,6 +27,8 @@ export class CreateTeamComponent {
     atk1: null,
     atk2: null,
   });
+  mapPosition = signal<string | null>(null);
+  position = signal<string | null>(null);
 
   teamName = new FormControl('', [
     Validators.required,
@@ -39,10 +41,9 @@ export class CreateTeamComponent {
     position: 'GK' | 'ATK' | 'MID' | 'DEF',
     mapPosition: 'gk' | 'def1' | 'def2' | 'mid' | 'atk1' | 'atk2'
   ) {
-    this.playersService.getPlayers(position).subscribe((data) => {
-      this.playersService.playerState.set({ loading: false, data });
-      this.playersDrawer.set(mapPosition);
-    });
+    this.mapPosition.set(mapPosition);
+    this.position.set(position);
+    this.playersDrawer.set(true);
   }
 
   onSelect({ player, position }: any) {

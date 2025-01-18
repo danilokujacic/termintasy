@@ -2,8 +2,10 @@
   <app-players-wrapper
     (closeChanges)="onSelect($event)"
     [playerPosition]="playersDrawer()"
+    [position]="position()"
+    [mapPosition]="mapPosition()"
     [selectedPlayers]="playersValues"
-    *ngIf="playersDrawer()"
+    [open]="playersDrawer()"
   ></app-players-wrapper>
   <div class="w-full h-full relative flex flex-col">
     <div class="h-[40px] px-2 flex items-center justify-between">
