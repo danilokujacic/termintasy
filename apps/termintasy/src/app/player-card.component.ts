@@ -9,6 +9,9 @@ import { CommonModule } from '@angular/common';
 })
 export class PlayerCardComponent {
   @Input() player: any;
+  @Input() isCaptain: boolean;
+  @Input() isTripleCaptain: boolean;
+  @Input() isGameActive: boolean;
   @Input() points?: number | null;
   @Input() captain: boolean;
   @Output() queryPlayers = new EventEmitter();

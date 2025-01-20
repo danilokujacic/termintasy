@@ -11,7 +11,7 @@
   <app-player-view-drawer
     [selectedPlayer]="previewPlayer()"
     [open]="playerViewDrawer()"
-    [enableTeamPlayer]="isNotTeamPlayer() && isOwner()"
+    [enableTeamPlayer]="isNotTeamPlayer() && isOwner() && !activeGame()"
     [disableTransfer]="isOwner() && !activeGame()"
     [teamCaptainId]="teamCaptainTemp()"
     (openTransfers)="onTransfer($event)"
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div
-        *ngIf="isOwner() && perks()"
+        *ngIf="isOwner() && perks() && !activeGame()"
         class="flex pt-3 justify-between w-full"
       >
         <div class="flex gap-2">
@@ -74,6 +74,16 @@
           >
             Free Hit
           </button>
+          <div
+            role="button"
+            [ngClass]="{
+              'w-10 text-[8px] flex-col ring-1 ring-blue-300 disabled:opacity-20  rounded-sm flex items-center justify-center': true,
+
+            }"
+          >
+            <p class="text-center">Free Transfer</p>
+            <p class="font-bold">{{ transfers() }}</p>
+          </div>
         </div>
         <div>
           <button
@@ -92,7 +102,11 @@
         <app-player-card
           [points]="playerPoints(players().gk)"
           *ngIf="players().gk"
+          [isCaptain]="teamCaptain() === players().gk.id"
           [player]="players().gk"
+          [isTripleCaptain]="
+            teamCaptain() === players().gk && tripleCaptainActive()
+          "
           (queryPlayers)="
             openPlayerPreview({ player: players().gk, mapPos: 'gk' })
           "
@@ -104,7 +118,11 @@
         <app-player-card
           [points]="playerPoints(players().def1)"
           *ngIf="players().def1"
+          [isCaptain]="teamCaptain() === players().def1.id"
           [player]="players().def1"
+          [isTripleCaptain]="
+            teamCaptain() === players().def1 && tripleCaptainActive()
+          "
           (queryPlayers)="
             openPlayerPreview({ player: players().def1, mapPos: 'def1' })
           "
@@ -114,7 +132,11 @@
         <app-player-card
           [points]="playerPoints(players().def2)"
           *ngIf="players().def2"
+          [isCaptain]="teamCaptain() === players().def2.id"
           [player]="players().def2"
+          [isTripleCaptain]="
+            teamCaptain() === players().def2 && tripleCaptainActive()
+          "
           (queryPlayers)="
             openPlayerPreview({ player: players().def2, mapPos: 'def2' })
           "
@@ -126,7 +148,11 @@
         <app-player-card
           [points]="playerPoints(players().mid)"
           *ngIf="players().mid"
+          [isCaptain]="teamCaptain() === players().mid.id"
           [player]="players().mid"
+          [isTripleCaptain]="
+            teamCaptain() === players().mid && tripleCaptainActive()
+          "
           (queryPlayers)="
             openPlayerPreview({ player: players().mid, mapPos: 'mid' })
           "
@@ -138,7 +164,11 @@
         <app-player-card
           [points]="playerPoints(players().atk1)"
           *ngIf="players().atk1"
+          [isCaptain]="teamCaptain() === players().atk1"
           [player]="players().atk1"
+          [isTripleCaptain]="
+            teamCaptain() === players().atk1 && tripleCaptainActive()
+          "
           (queryPlayers)="
             openPlayerPreview({ player: players().atk1, mapPos: 'atk1' })
           "
@@ -148,6 +178,10 @@
         <app-player-card
           [points]="playerPoints(players().atk2)"
           *ngIf="players().atk2"
+          [isCaptain]="teamCaptain() === players().atk2"
+          [isTripleCaptain]="
+            teamCaptain() === players().atk2 && tripleCaptainActive()
+          "
           [player]="players().atk2"
           (queryPlayers)="
             openPlayerPreview({ player: players().atk2, mapPos: 'atk2' })
