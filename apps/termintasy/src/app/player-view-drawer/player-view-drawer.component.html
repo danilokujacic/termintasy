@@ -75,6 +75,18 @@
               <p><span [countUp]="player.pickPercentage">0</span>%</p>
             </div>
             <div class="text-sm font-semibold flex">
+              <p>Grade:</p>
+              <p
+                [ngClass]="{
+                  'text-red-600': player.grade === 'S',
+                  'text-green-400': player.grade === 'A',
+                  'text-black': player.grade === 'F'
+                }"
+              >
+                {{ player.grade }}
+              </p>
+            </div>
+            <div class="text-sm font-semibold flex">
               <p>Goals:</p>
               <p><span [countUp]="goals">0</span></p>
             </div>
