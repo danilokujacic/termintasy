@@ -34,7 +34,7 @@
       {{ player.name }}
     </span>
     <span *ngIf="points" class="font-bold self-center text-center block">{{
-      points
+      isTripleCaptain ? points * 3 : isCaptain ? points * 2 : points
     }}</span>
   </div>
 </button>
