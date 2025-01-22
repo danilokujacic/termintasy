@@ -4,7 +4,15 @@ importScripts(
 importScripts(
   'https://www.gstatic.com/firebasejs/9.1.3/firebase-messaging-compat.js'
 );
-const urConfigObj = {};
+const urConfigObj = {
+  apiKey: 'AIzaSyAsCn-JTYjJubpQ53EyzlbMIgbFWLIpde0',
+  authDomain: 'termintasy.firebaseapp.com',
+  projectId: 'termintasy',
+  storageBucket: 'termintasy.firebasestorage.app',
+  messagingSenderId: '824710831706',
+  appId: '1:824710831706:web:1955cb588a8ec30fe0c263',
+  measurementId: 'G-WRYS215176',
+};
 firebase.initializeApp(urConfigObj);
 const messaging = firebase.messaging();
 messaging.onBackgroundMessage(function (payload) {
