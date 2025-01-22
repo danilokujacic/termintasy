@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PushNotificationService } from './push-notification.service';
+import { Messaging } from '@angular/fire/messaging';
+import { FcmService } from './fcm.service';
 
 @Component({
   imports: [RouterModule],
@@ -9,7 +10,8 @@ import { PushNotificationService } from './push-notification.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  messaging = inject(Messaging);
   title = 'termintasy';
 
-  constructor(private pnService: PushNotificationService) {}
+  constructor(private pnService: FcmService) {}
 }
