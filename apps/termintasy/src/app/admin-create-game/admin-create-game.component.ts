@@ -66,7 +66,7 @@ export class AdminCreateGameComponent implements OnInit {
           players: this.teamOnePlayers.map((player: any) => player.id),
         },
         awayTeam: {
-          players: this.teamOnePlayers.map((player: any) => player.id),
+          players: this.teamTwoPlayers.map((player: any) => player.id),
         },
       })
       .subscribe(() => {
