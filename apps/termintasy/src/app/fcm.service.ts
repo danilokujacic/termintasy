@@ -17,16 +17,20 @@ export class FcmService {
   );
 
   constructor(private msg: Messaging, private http: HttpClient) {
-    Notification.requestPermission().then(
-      (notificationPermissions: NotificationPermission) => {
-        if (notificationPermissions === 'granted') {
-          console.log('Granted');
+    if ('Notification' in window) {
+      Notification.requestPermission().then(
+        (notificationPermissions: NotificationPermission) => {
+          if (notificationPermissions === 'granted') {
+            console.log('Granted');
+          }
+          if (notificationPermissions === 'denied') {
+            console.log('Denied');
+          }
         }
-        if (notificationPermissions === 'denied') {
-          console.log('Denied');
-        }
-      }
-    );
+      );
+    } else {
+      console.error('Notifications are not supported in this browser.');
+    }
     navigator.serviceWorker
       .register('firebase-messaging-sw.js', {
         type: 'module',
