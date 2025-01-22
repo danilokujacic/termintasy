@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Messaging } from '@angular/fire/messaging';
-import { FcmService } from './fcm.service';
 
 @Component({
   imports: [RouterModule],
@@ -13,5 +12,5 @@ export class AppComponent {
   messaging = inject(Messaging);
   title = 'termintasy';
 
-  constructor(private pnService: FcmService) {}
+  constructor() {}
 }
