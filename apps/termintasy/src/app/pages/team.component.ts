@@ -150,7 +150,7 @@ export class TeamComponent implements OnInit {
         this.http
           .get(environment.apiUrl + '/game/active-game')
           .subscribe((data: any) => {
-            this.activeGame.set(!!data.game);
+            this.activeGame.set(!!data?.game);
           });
 
         this.teamId.set(data.id);
