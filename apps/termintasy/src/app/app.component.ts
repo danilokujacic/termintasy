@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { PushNotificationService } from './push-notification.service';
 
 @Component({
   imports: [RouterModule],
@@ -9,4 +10,6 @@ import { RouterModule } from '@angular/router';
 })
 export class AppComponent {
   title = 'termintasy';
+
+  constructor(private pnService: PushNotificationService) {}
 }
