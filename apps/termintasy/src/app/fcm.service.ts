@@ -36,9 +36,11 @@ export class FcmService {
           vapidKey: `BOFMA8d-khvtMqYCm6PvnC5lRHSf6YRiH77h39caEK0tpNqx7LeaFmghmU0vR9h-X10p4O6sff4KNLm6gc5k8m8`,
           serviceWorkerRegistration: serviceWorkerRegistration,
         }).then((x) => {
-          this.http.post(environment.apiUrl + '/push-notification/send-token', {
-            token: x,
-          });
+          this.http
+            .post(environment.apiUrl + '/push-notification/send-token', {
+              token: x,
+            })
+            .subscribe();
           // This is a good place to then store it on your database for each user
         });
       });
