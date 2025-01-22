@@ -21,12 +21,13 @@ export class PushNotificationService {
       }
     );
     navigator.serviceWorker
-      .register('firebase-messaging-sw.js')
+      .register('/firebase-messaging-sw.js')
       .then((serviceWorkerRegistration) => {
         getToken(this.messaging, {
           vapidKey: `BOFMA8d-khvtMqYCm6PvnC5lRHSf6YRiH77h39caEK0tpNqx7LeaFmghmU0vR9h-X10p4O6sff4KNLm6gc5k8m8`,
           serviceWorkerRegistration: serviceWorkerRegistration,
         }).then((x) => {
+          console.log(x);
           this.http.post(environment.apiUrl + '/push-notification/save-token', {
             token: x,
           });
