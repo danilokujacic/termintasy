@@ -1,0 +1,3 @@
+.in-game {
+  @apply bg-gray-800 rounded-full w-5 h-5 flex items-center justify-center;
+}
