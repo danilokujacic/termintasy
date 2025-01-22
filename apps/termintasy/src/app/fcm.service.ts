@@ -15,6 +15,7 @@ export class FcmService {
       console.log('My Firebase Cloud Message', msg);
     })
   );
+
   constructor(private msg: Messaging, private http: HttpClient) {
     Notification.requestPermission().then(
       (notificationPermissions: NotificationPermission) => {
