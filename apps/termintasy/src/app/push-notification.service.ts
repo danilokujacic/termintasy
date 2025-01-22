@@ -21,7 +21,7 @@ export class PushNotificationService {
       }
     );
     navigator.serviceWorker
-      .register('src/firebase-messaging-sw.js', {
+      .register('firebase-messaging-sw.js', {
         type: 'module',
       })
       .then((serviceWorkerRegistration) => {
