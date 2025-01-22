@@ -1,8 +1,6 @@
+importScripts('https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js');
 importScripts(
-  'https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js'
-);
-importScripts(
-  'https://www.gstatic.com/firebasejs/9.1.3/firebase-messaging-compat.js'
+  'https://www.gstatic.com/firebasejs/11.2.0/firebase-messaging.js'
 );
 const urConfigObj = {
   apiKey: 'AIzaSyAsCn-JTYjJubpQ53EyzlbMIgbFWLIpde0',
@@ -14,7 +12,9 @@ const urConfigObj = {
   measurementId: 'G-WRYS215176',
 };
 firebase.initializeApp(urConfigObj);
-const messaging = firebase.messaging();
+const messaging = firebase.messaging({
+  senderId: '824710831706',
+});
 messaging.onBackgroundMessage(function (payload) {
   console.log(
     '[firebase-messaging-sw.js] Received background message ',
