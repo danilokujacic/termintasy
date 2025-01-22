@@ -10,6 +10,10 @@ import { GamesComponent } from './pages/games.component';
 import { GameComponent } from './pages/game.component';
 import { PlayerStatisticsComponent } from './pages/player-statistics.component';
 import { PlayerComponent } from './pages/player.component';
+import { AdminPageComponent } from './pages/admin-page.component';
+import { AdminCreateGameComponent } from './admin-create-game/admin-create-game.component';
+import AdminGuard from './guards/admin.guard';
+import { AdminGameUpdateComponent } from './pages/admin-game-update.component';
 
 export const appRoutes: Route[] = [
   {
@@ -30,6 +34,28 @@ export const appRoutes: Route[] = [
     component: TeamComponent,
     canActivate: [AuthGuard, TeamGuard],
   },
+  {
+    path: 'admin',
+
+    children: [
+      {
+        path: '',
+        component: AdminPageComponent,
+        canActivate: [AuthGuard, TeamGuard, AdminGuard],
+      },
+      {
+        path: 'create-game',
+        component: AdminCreateGameComponent,
+        canActivate: [AuthGuard, TeamGuard, AdminGuard],
+      },
+      {
+        path: 'update-game',
+        component: AdminGameUpdateComponent,
+        canActivate: [AuthGuard, TeamGuard, AdminGuard],
+      },
+    ],
+  },
+
   {
     path: 'games',
     component: GamesComponent,

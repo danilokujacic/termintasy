@@ -1,0 +1,132 @@
+<div class="flex flex-col gap-2 pb-[150px] pt-4 px-2">
+  <app-replace-player-drawer
+    (playerSelect)="replacePlayer($event)"
+    [open]="playersDrawer"
+    [selectedPlayers]="selectedPlayers"
+    (closeDrawer)="closeDrawer()"
+  ></app-replace-player-drawer>
+  <input
+    [formControl]="gameDate"
+    [min]="minDate"
+    title="Min Date"
+    type="datetime-local"
+  />
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+      <p>Team 1</p>
+      <button
+        *ngFor="let player of teamOnePlayers"
+        (click)="switchTeam(player, 'teamTwo')"
+        class="flex items-center justify-between max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      >
+        <p>
+          {{ player.name }}
+        </p>
+        <div class="flex items-center gap-1">
+          <button
+            title="Select player"
+            type="button"
+            (click)="selectPlayer($event, player)"
+          >
+            <svg
+              class="w-6 h-6 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"
+              />
+            </svg>
+          </button>
+          <svg
+            class="w-6 h-6 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 19V5m0 14-4-4m4 4 4-4"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
+    <div class="flex flex-col gap-2">
+      <p>Team 2</p>
+      <button
+        (click)="switchTeam(player, 'teamOne')"
+        *ngFor="let player of teamTwoPlayers"
+        class="flex items-center justify-between max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      >
+        <p>
+          {{ player.name }}
+        </p>
+        <div class="flex items-center gap-1">
+          <button
+            title="Select player"
+            type="button"
+            (click)="selectPlayer($event, player)"
+          >
+            <svg
+              class="w-6 h-6 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"
+              />
+            </svg>
+          </button>
+          <svg
+            class="w-6 h-6 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v13m0-13 4 4m-4-4-4 4"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
+    <div
+      *ngIf="teamOnePlayers.length === 6 && teamTwoPlayers.length === 6"
+      class="flex fixed bottom-0 left-0 w-full px-2 bg-white justify-end py-4"
+    >
+      <button (click)="updateGame()" class="bg-blue-500 px-2 py-1 text-white">
+        Confirm
+      </button>
+    </div>
+  </div>
+</div>

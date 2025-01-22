@@ -13,7 +13,7 @@
     "lib": ["es2018", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "downlevelIteration": true, // Ensures proper transpilation of iterables like for..of loops
+    "downlevelIteration": true,
     "baseUrl": ".",
     "paths": {
       "@termintasy/types": ["libs/types/src/index.ts"]

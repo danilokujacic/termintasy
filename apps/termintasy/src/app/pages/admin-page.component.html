@@ -1,0 +1,74 @@
+<div class="p-2">
+  <div class="flex pb-4 gap-2">
+    <div class="flex-1 flex justify-between items-center">
+      <p>Home Team</p>
+      <input
+        title="Input"
+        type="number"
+        min="0"
+        [formControl]="homeTeamScore"
+        class="size-10 border border-gray-600 rounded-sm"
+      />
+    </div>
+    <div class="flex-1 flex justify-between items-center">
+      <input
+        title="Input"
+        min="0"
+        type="number"
+        [formControl]="awayTeamScore"
+        class="size-10 border border-gray-600 rounded-sm"
+      />
+      <p>Away Team</p>
+    </div>
+  </div>
+  <textarea
+    class="w-full mb-1 min-h-[150px]"
+    title="Prompt"
+    [formControl]="promptControl"
+  ></textarea>
+  <div class="flex justify-end">
+    <button
+      (click)="generatePlayerContent()"
+      [disabled]="!promptControl.valid || generating"
+      class="bg-blue-600 disabled:bg-gray-200 disabled:text-gray-600 p-1 rounded-sm text-white"
+    >
+      {{ generating ? 'Generating...' : 'Generate' }}
+    </button>
+  </div>
+  <div *ngIf="players && players.length" class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2">
+      <app-player-stat-item
+        (playerRemove)="removePlayer($event)"
+        [gameId]="activeGame.id"
+        class="gap-1 flex"
+        [playersList]="getAvailablePlayers()"
+        *ngFor="let player of players"
+        [player]="player"
+      >
+      </app-player-stat-item>
+    </div>
+    <button
+      type="button"
+      (click)="addNewPlayerStat()"
+      class="bg-blue-500 max-width-[200px] text-white"
+    >
+      + Add Player
+    </button>
+  </div>
+  <div class="flex justify-end gap-2 py-1">
+    <button
+      [disabled]="!activeGame.started"
+      (click)="sumarizeResults()"
+      class="bg-green-500 py-1 disabled:bg-gray-300 px-2"
+    >
+      Summarize Results
+    </button>
+    <button
+      [disabled]="!activeGame.summarized"
+      (click)="endGame()"
+      class="bg-red-500 disabled:bg-gray-300 py-1 px-2"
+    >
+      End Game
+    </button>
+  </div>
+</div>

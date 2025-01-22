@@ -18,6 +18,10 @@ export class FooterComponent implements OnInit {
       this.user.set(user);
     });
   }
+
+  get admin() {
+    return this.userService.user().admin;
+  }
   isRouteActive(route: string) {
     return this.router.url === route;
   }

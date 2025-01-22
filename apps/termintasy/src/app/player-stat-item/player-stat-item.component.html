@@ -1,0 +1,66 @@
+<div class="w-full py-4">
+  <p *ngIf="playerName; else selectPlayersTemplate">{{ playerName }}</p>
+  <ng-template #selectPlayersTemplate>
+    <select title="title" [formControl]="playerSelect">
+      <option
+        *ngFor="let availablePlayer of playersList"
+        [value]="availablePlayer.id"
+      >
+        {{ availablePlayer.name }}
+      </option>
+    </select>
+  </ng-template>
+  <div class="flex gap-2 overflow-x-auto w-full">
+    <div class="min-w-[250px] flex-1 flex flex-col">
+      <p>Goals</p>
+      <input
+        type="number"
+        [formControl]="goal"
+        class="min-w-[250px] flex-1 p-1 border border-gray-700 flex-shrink-0 rounded-sm"
+        title="input"
+      />
+    </div>
+
+    <div class="min-w-[250px] flex-1 flex flex-col">
+      <p>Assists</p>
+      <input
+        type="number"
+        [formControl]="assists"
+        class="min-w-[250px] flex-1 p-1 border border-gray-700 flex-shrink-0 rounded-sm"
+        title="input"
+      />
+    </div>
+
+    <div class="min-w-[250px] flex-1 flex flex-col">
+      <p>Clean Sheets</p>
+      <input
+        type="number"
+        [formControl]="cleanSheets"
+        class="min-w-[250px] flex-1 p-1 border border-gray-700 flex-shrink-0 rounded-sm"
+        title="input"
+      />
+    </div>
+
+    <div class="min-w-[250px] flex-1 flex flex-col">
+      <p>Saves</p>
+      <input
+        type="number"
+        [formControl]="saves"
+        class="min-w-[250px] flex-1 p-1 border border-gray-700 flex-shrink-0 rounded-sm"
+        title="input"
+      />
+    </div>
+    <button (click)="removePlayer()" class="bg-red-800 text-white">
+      Remove
+    </button>
+  </div>
+  <div class="pt-2">
+    <button
+      [disabled]="disableSavePlayer"
+      (click)="savePlayer()"
+      class="bg-blue-500 disabled:bg-gray-400 disabled:text-gray-500 px-2 py-1 text-white"
+    >
+      Save Player
+    </button>
+  </div>
+</div>
