@@ -28,9 +28,11 @@ export class PushNotificationService {
           serviceWorkerRegistration: serviceWorkerRegistration,
         }).then((x) => {
           console.log(x);
-          this.http.post(environment.apiUrl + '/push-notification/save-token', {
-            token: x,
-          });
+          this.http
+            .post(environment.apiUrl + '/push-notification/save-token', {
+              token: x,
+            })
+            .subscribe();
           // This is a good place to then store it on your database for each user
         });
       });
