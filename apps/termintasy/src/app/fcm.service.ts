@@ -37,7 +37,7 @@ export class FcmService {
           serviceWorkerRegistration: serviceWorkerRegistration,
         }).then((x) => {
           this.http
-            .post(environment.apiUrl + '/push-notification/send-token', {
+            .post(environment.apiUrl + '/push-notification/save-token', {
               token: x,
             })
             .subscribe();
